@@ -1,13 +1,20 @@
-//Game board will be 15x15
-const boardSize = 15;
+//Game board will be 20x20
+//This means every step will be 50 pixels
+const boardSize = 20;
+const step = 50
 let isGameOver = false;
 
 //definitions
+let defaultSnake = {
+    body: [ [10, 5], [10, 6], [10, 7], [10, 8] ],
+    nextDirection: [1, 0],
+    apple: [11, 8]
+}
 let snake = {
     body: [ [10, 5], [10, 6], [10, 7], [10, 8] ],
     nextDirection: [1, 0],
     apple: [11, 8]
-  }
+}
 
 function move() {
     const newSeg = [snake.body[snake.body.length-1][0] + snake.nextDirection[0], snake.body[snake.body.length-1][1] + snake.nextDirection[1]];
@@ -39,28 +46,40 @@ function testSnake() {
 }
 
 function update(event) {
-    if (event.which == 37) {
-        nextDirection = [-1, 0];
-    }
-    if (event.which == 38) {
-        nextDirection = [0, 1];
-    }
-    if (event.which == 39) {
-        nextDirection = [1, 0];
-    }
-    if (event.which == 40) {
-        nextDirection = [0, -1];
+    switch (event.keyCode) {
+        case 37:
+            nextDirection = [-1, 0];
+        case 38:
+            nextDirection = [0, -1];
+        case 39:
+            nextDirection = [1, 0];
+        case 40:
+            nextDirection = [0, 1];
     }
 }
 
+function draw() {
+    //background
+    ctx.fillStyle = "gray";
+    ctx.fillRect(0, 0, 1000, 1000);
+
+    //snek
+    ctx.fillStyle = "purple";
+    for(const segment of snake.body) {
+        ctx.fillRect(segment[0]*step, segment[1]*step, step, step);
+    }
+
+    //apple
+    ctx.fillStyle = "red";
+    ctx.fillRect(apple[0]*step, apple[1]*step, step, step)
+}
 
 
 //main file
 document.addEventListener('keydown', update);
-
+gameBoard = document.getElementById("board");
 while(!isGameOver) {
     move();
-    
-
+    draw();
     isGameOver = testSnake();
 }
