@@ -1,7 +1,7 @@
 //Game board will be 20x20
-//This means every step will be 50 pixels
+//This means every step will be 40 pixels
 const boardSize = 20;
-const step = 50
+const step = 40
 let isGameOver = false;
 
 //definitions
@@ -60,8 +60,8 @@ function update(event) {
 
 function draw() {
     //background
-    ctx.fillStyle = "gray";
-    ctx.fillRect(0, 0, 1000, 1000);
+    ctx.fillStyle = "grey";
+    ctx.fillRect(0, 0, 800, 800);
 
     //snek
     ctx.fillStyle = "purple";
@@ -76,8 +76,10 @@ function draw() {
 
 
 //main file
-document.addEventListener('keydown', update);
-gameBoard = document.getElementById("board");
+document.addEventListener("keydown", update);
+let canvas = document.getElementById("board");
+let ctx = canvas.getContext("2d");
+draw();
 while(!isGameOver) {
     move();
     draw();
