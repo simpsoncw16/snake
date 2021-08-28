@@ -73,7 +73,7 @@ function draw() {
 
     //apple
     ctx.fillStyle = "red";
-    ctx.fillRect(apple[0]*step, apple[1]*step, step, step)
+    ctx.fillRect(snake.apple[0]*step, snake.apple[1]*step, step, step)
 }
 
 
