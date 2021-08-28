@@ -59,6 +59,8 @@ function update(event) {
 }
 
 function draw() {
+    let canvas = document.getElementById("board");
+    let ctx = canvas.getContext("2d");
     //background
     ctx.fillStyle = "grey";
     ctx.fillRect(0, 0, 800, 800);
@@ -77,8 +79,6 @@ function draw() {
 
 //main file
 document.addEventListener("keydown", update);
-let canvas = document.getElementById("board");
-let ctx = canvas.getContext("2d");
 draw();
 while(!isGameOver) {
     move();
