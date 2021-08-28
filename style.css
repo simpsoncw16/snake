@@ -2,3 +2,7 @@
     background-color: white;
     color:black;
 }
+
+canvas {
+    align-self: center;
+}

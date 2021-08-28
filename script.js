@@ -3,6 +3,9 @@
 const boardSize = 20;
 const step = 40
 let isGameOver = false;
+let canvas = document.getElementById("board");
+let ctx = canvas.getContext("2d");
+document.addEventListener("keydown", update);
 
 //definitions
 let defaultSnake = {
@@ -59,8 +62,7 @@ function update(event) {
 }
 
 function draw() {
-    let canvas = document.getElementById("board");
-    let ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, 800, 800);
     //background
     ctx.fillStyle = "grey";
     ctx.fillRect(0, 0, 800, 800);
@@ -74,14 +76,11 @@ function draw() {
     //apple
     ctx.fillStyle = "red";
     ctx.fillRect(snake.apple[0]*step, snake.apple[1]*step, step, step)
+    
+    requestAnimationFrame(draw);
 }
 
 
 //main file
-document.addEventListener("keydown", update);
 draw();
-while(!isGameOver) {
-    move();
-    draw();
-    isGameOver = testSnake();
-}
+setInterval(move, 1000);
