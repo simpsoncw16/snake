@@ -13,26 +13,28 @@ let defaultSnake = {
     nextDirection: [1, 0],
     apple: [11, 8]
 }
-let snake = {
-    body: [ [10, 5], [10, 6], [10, 7], [10, 8] ],
-    nextDirection: [1, 0],
-    apple: [11, 8]
-}
+let snake = defaultSnake;
 
 function move() {
     const newSeg = [snake.body[snake.body.length-1][0] + snake.nextDirection[0], snake.body[snake.body.length-1][1] + snake.nextDirection[1]];
     snake.body.push(newSeg);
-    if(snake.body[snake.body.length-1][0] !== snake.apple[0] && snake.body[snake.body.length-1][1] !== snake.apple[1]) {
+    if(snake.body[snake.body.length-1][0] !== snake.apple[0] || snake.body[snake.body.length-1][1] !== snake.apple[1]) {
         snake.body.splice(0, 1);
     } else {
-        apple = [Math.floor(Math.random() * boardSize), Math.floor(Math.random() * boardSize)];
+        snake.apple = [Math.floor(Math.random() * boardSize), Math.floor(Math.random() * boardSize)];
+    }
+    if(!testSnake()) {
+        //clearInterval(game);
+        //cancelAnimationFrame(draw);
+        snake = defaultSnake;
+        isGameOver = true;
     }
 }
 
 function testSnake() {
     for(const segment of snake.body) {
         //test walls
-        if(segment[0]>=boardSize || segment[0] < 0 || segment[1]>=boardSize || segment[1]<0){
+        if(segment[0]>= boardSize || segment[0] < 0 || segment[1]>=boardSize || segment[1]<0){
             return false;
         }
 
