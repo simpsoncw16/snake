@@ -22,7 +22,7 @@ let snake = {
 function move() {
     const newSeg = [snake.body[snake.body.length-1][0] + snake.nextDirection[0], snake.body[snake.body.length-1][1] + snake.nextDirection[1]];
     snake.body.push(newSeg);
-    if(snake.body[snake.body.length-1] !== snake.apple) {
+    if(snake.body[snake.body.length-1][0] !== snake.apple[0] && snake.body[snake.body.length-1][1] !== snake.apple[1]) {
         snake.body.splice(0, 1);
     } else {
         apple = [Math.floor(Math.random() * boardSize), Math.floor(Math.random() * boardSize)];
@@ -51,14 +51,19 @@ function testSnake() {
 function update(event) {
     switch (event.keyCode) {
         case 37:
-            nextDirection = [-1, 0];
+            snake.nextDirection = [-1, 0];
+            break;
         case 38:
-            nextDirection = [0, -1];
+            snake.nextDirection = [0, -1];
+            break;
         case 39:
-            nextDirection = [1, 0];
+            snake.nextDirection = [1, 0];
+            break;
         case 40:
-            nextDirection = [0, 1];
+            snake.nextDirection = [0, 1];
+            break;
     }
+    console.log(event.keyCode);
 }
 
 function draw() {
@@ -83,4 +88,6 @@ function draw() {
 
 //main file
 draw();
-setInterval(move, 1000);
+let game = setInterval(move, 1000);
+
+
