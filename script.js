@@ -25,6 +25,7 @@ function move() {
         clearInterval(game);
         cancelAnimationFrame(draw);
         isGameOver = true;
+        return;
     }
     const newSeg = [snake.body[snake.body.length-1][0] + snake.nextDirection[0], snake.body[snake.body.length-1][1] + snake.nextDirection[1]];
     snake.body.push(newSeg);
