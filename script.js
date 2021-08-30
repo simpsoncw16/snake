@@ -8,6 +8,8 @@ let ctx = canvas.getContext("2d");
 document.addEventListener("keydown", update);
 
 //definitions
+
+//For restarting the game
 let defaultSnake = {
     body: [ [10, 5], [10, 6], [10, 7], [10, 8] ],
     nextDirection: [1, 0],
@@ -16,6 +18,13 @@ let defaultSnake = {
 let snake = defaultSnake;
 
 function move() {
+    console.log("moving")
+    if(!testSnake()) {
+        console.log("game over")
+        clearInterval(game);
+        cancelAnimationFrame(draw);
+        isGameOver = true;
+    }
     const newSeg = [snake.body[snake.body.length-1][0] + snake.nextDirection[0], snake.body[snake.body.length-1][1] + snake.nextDirection[1]];
     snake.body.push(newSeg);
     if(snake.body[snake.body.length-1][0] !== snake.apple[0] || snake.body[snake.body.length-1][1] !== snake.apple[1]) {
@@ -23,15 +32,10 @@ function move() {
     } else {
         snake.apple = [Math.floor(Math.random() * boardSize), Math.floor(Math.random() * boardSize)];
     }
-    if(!testSnake()) {
-        //clearInterval(game);
-        //cancelAnimationFrame(draw);
-        snake = defaultSnake;
-        isGameOver = true;
-    }
 }
 
 function testSnake() {
+    let tester = 0;
     for(const segment of snake.body) {
         //test walls
         if(segment[0]>= boardSize || segment[0] < 0 || segment[1]>=boardSize || segment[1]<0){
@@ -39,8 +43,7 @@ function testSnake() {
         }
 
         //test touching self
-        let tester = 0;
-        if(segment === snake.body[0]) {
+        if(segment[0] === snake.body[0][0] && segment[1] === snake.body[0][1]) {
             tester++;
         }
         if(tester > 1) {
@@ -90,6 +93,6 @@ function draw() {
 
 //main file
 draw();
-let game = setInterval(move, 1000);
+let game = setInterval(move, 500);
 
 
