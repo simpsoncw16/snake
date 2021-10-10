@@ -18,6 +18,10 @@ let defaultSnake = {
 }
 let snake = defaultSnake;
 
+let score = 0;
+let scoreTracker = document.getElementById("score");
+let gameOver = document.getElementById("gameover");
+
 function move() {
     console.log("moving")
     if(!testSnake()) {
@@ -34,12 +38,15 @@ function move() {
         snake.body.splice(0, 1);
     } else {
         snake.apple = [Math.floor(Math.random() * boardSize), Math.floor(Math.random() * boardSize)];
+        score++;
+        scoreTracker.innerHTML = `Score: ${score}`;
     }
 }
 
 function testSnake() {
     let tester = 0;
     if(snake.head[0]>= boardSize || snake.head[0] < 0 || snake.head[1]>=boardSize || snake.head[1]<0){
+        gameOver.innerHTML = "Game Over!";
         return false;
     }
     for(const segment of snake.body) {
@@ -49,6 +56,7 @@ function testSnake() {
             tester++;
         }
         if(tester > 1) {
+            gameOver.innerHTML = "Game Over!";
             return false;
         }
     }
